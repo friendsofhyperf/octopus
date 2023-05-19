@@ -11,11 +11,16 @@ declare(strict_types=1);
  */
 namespace Hyperf\Octopus;
 
+use Hyperf\Di\Definition\PriorityDefinition;
+
 class ConfigProvider
 {
     public function __invoke(): array
     {
         return [
+            'dependencies' => [
+                Node::class => new PriorityDefinition(NodeFactory::class),
+            ],
             'annotations' => [
                 'scan' => [
                     'paths' => [
