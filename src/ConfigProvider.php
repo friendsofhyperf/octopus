@@ -28,6 +28,14 @@ class ConfigProvider
                     ],
                 ],
             ],
+            'publish' => [
+                [
+                    'id' => 'config',
+                    'description' => 'The config for octopus.',
+                    'source' => __DIR__ . '/../publish/octopus.php',
+                    'destination' => BASE_PATH . '/config/autoload/octopus.php',
+                ],
+            ],
         ];
     }
 }
