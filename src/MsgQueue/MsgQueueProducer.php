@@ -9,15 +9,11 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
-namespace Hyperf\Octopus\Event;
+namespace Hyperf\Octopus\MsgQueue;
 
-interface EventInterface
+use Hyperf\Octopus\Annotation\Producer;
+
+#[Producer]
+class MsgQueueProducer
 {
-    public function getNodeId(): string;
-
-    public function getPayload(): array;
-
-    public function getFds(): array;
-
-    public function isSuccess(): bool;
 }

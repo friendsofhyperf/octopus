@@ -11,13 +11,15 @@ declare(strict_types=1);
  */
 namespace Hyperf\Octopus\Event;
 
-interface EventInterface
+class BrokenEvent extends Event
 {
-    public function getNodeId(): string;
+    public function __construct(public mixed $raw)
+    {
+        parent::__construct('', []);
+    }
 
-    public function getPayload(): array;
-
-    public function getFds(): array;
-
-    public function isSuccess(): bool;
+    public function isSuccess(): bool
+    {
+        return false;
+    }
 }
