@@ -1,5 +1,10 @@
-# component-creator
+# Octopus
+
+## 安装
 
 ```
-composer create-project hyperf/component-creator
+composer require hyperf/octopus
 ```
+
+## 使用
+
