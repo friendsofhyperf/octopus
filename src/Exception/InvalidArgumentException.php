@@ -9,13 +9,8 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
-namespace Hyperf\Octopus;
+namespace Hyperf\Octopus\Exception;
 
-use Hyperf\Octopus\Event\EventInterface;
-
-class Client
+class InvalidArgumentException extends \InvalidArgumentException
 {
-    public function push(EventInterface $event)
-    {
-    }
 }

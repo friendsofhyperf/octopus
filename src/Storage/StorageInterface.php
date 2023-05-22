@@ -11,6 +11,15 @@ declare(strict_types=1);
  */
 namespace Hyperf\Octopus\Storage;
 
-interface StorageInterface
+use Hyperf\Contract\Arrayable;
+
+interface StorageInterface extends Arrayable
 {
+    public function getUid(): int|string;
+
+    public function getNodeId(): string;
+
+    public function getFd(): int;
+
+    public function save(): void;
 }
