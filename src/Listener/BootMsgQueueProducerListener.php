@@ -11,13 +11,16 @@ declare(strict_types=1);
  */
 namespace Hyperf\Octopus\Listener;
 
+use Hyperf\Amqp\Annotation\Consumer as AmqpConsumer;
 use Hyperf\Amqp\Annotation\Producer as AmqpProducer;
 use Hyperf\Contract\ConfigInterface;
 use Hyperf\Di\Annotation\AnnotationCollector;
 use Hyperf\Event\Annotation\Listener;
 use Hyperf\Event\Contract\ListenerInterface;
 use Hyperf\Framework\Event\BootApplication;
+use Hyperf\Octopus\MsgQueue\Amqp\EventConsumer;
 use Hyperf\Octopus\MsgQueue\Amqp\EventProducer;
+use Hyperf\Octopus\Node;
 
 #[Listener]
 class BootMsgQueueProducerListener implements ListenerInterface
@@ -47,6 +50,11 @@ class BootMsgQueueProducerListener implements ListenerInterface
                 );
 
                 AnnotationCollector::collectClass(EventProducer::class, AmqpProducer::class, new AmqpProducer($options['exchange'], $options['routing_key']));
+                AnnotationCollector::collectClass(EventConsumer::class, AmqpConsumer::class, new AmqpConsumer(
+                    $options['exchange'],
+                    $options['routing_key'],
+                    $options['queue_prefix'] . di()->get(Node::class),
+                ));
                 break;
         }
     }

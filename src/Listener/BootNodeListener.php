@@ -18,7 +18,7 @@ use Hyperf\Framework\Event\BootApplication;
 use Hyperf\Octopus\Node;
 use Psr\Container\ContainerInterface;
 
-#[Listener]
+#[Listener(99)]
 class BootNodeListener implements ListenerInterface
 {
     public function __construct(private ContainerInterface $container)
