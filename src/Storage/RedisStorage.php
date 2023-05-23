@@ -16,49 +16,23 @@ use Hyperf\Redis\Redis;
 
 class RedisStorage implements StorageInterface
 {
-    public const KEY_PREFIX = 'octopus:';
-
-    public function __construct(protected Redis $redis, protected int|string $uid, protected string $nodeId, protected int $fd)
+    public function __construct(protected Redis $redis, protected string $keyPrefix, protected int $ttl)
     {
     }
 
-    public function getUid(): int|string
+    public function save(Meta $meta): void
     {
-        return $this->uid;
+        $key = $this->keyPrefix . $meta->uid;
+
+        $this->redis->set($key, Json::encode($meta->toArray()), $this->ttl);
     }
 
-    public function getNodeId(): string
+    public function from(int|string $uid): Meta
     {
-        return $this->nodeId;
-    }
+        $key = $this->keyPrefix . $uid;
 
-    public function getFd(): int
-    {
-        return $this->fd;
-    }
+        $data = Json::decode($this->redis->get($key));
 
-    public function save(): void
-    {
-        $key = self::KEY_PREFIX . $this->uid;
-
-        $this->redis->set($key, Json::encode($this->toArray()), 8640000);
-    }
-
-    public function toArray(): array
-    {
-        return [
-            'uid' => $this->uid,
-            'node_id' => $this->nodeId,
-            'fd' => $this->fd,
-        ];
-    }
-
-    public static function from(Redis $redis, int|string $uid): static
-    {
-        $key = self::KEY_PREFIX . $uid;
-
-        $data = $redis->get($key);
-
-        return new static($redis, $data['uid'], $data['node_id'], $data['fd']);
+        return Meta::jsonDeSerialize($data);
     }
 }

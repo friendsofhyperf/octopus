@@ -11,15 +11,9 @@ declare(strict_types=1);
  */
 namespace Hyperf\Octopus\Storage;
 
-use Hyperf\Contract\Arrayable;
-
-interface StorageInterface extends Arrayable
+interface StorageInterface
 {
-    public function getUid(): int|string;
+    public function save(Meta $meta): void;
 
-    public function getNodeId(): string;
-
-    public function getFd(): int;
-
-    public function save(): void;
+    public function from(int|string $uid): Meta;
 }

@@ -26,6 +26,8 @@ return [
             'redis' => [
                 // from `config/autoload/redis.php`.
                 'pool' => 'default',
+                'key_prefix' => '{octopus}:',
+                'ttl' => 864000,
             ],
         ],
     ],
