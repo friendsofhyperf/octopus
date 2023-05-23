@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Hyperf\Octopus\Storage;
 
 use Hyperf\Codec\Json;
+use Hyperf\Octopus\Exception\MetaNotFoundException;
 use Hyperf\Redis\Redis;
 
 class RedisStorage implements StorageInterface
@@ -31,7 +32,12 @@ class RedisStorage implements StorageInterface
     {
         $key = $this->keyPrefix . $uid;
 
-        $data = Json::decode($this->redis->get($key));
+        $res = $this->redis->get($key);
+        if (! $res) {
+            throw new MetaNotFoundException();
+        }
+
+        $data = Json::decode($res);
 
         return Meta::jsonDeSerialize($data);
     }

@@ -14,6 +14,7 @@ namespace Hyperf\Octopus\Storage;
 use Hyperf\Octopus\Exception\InvalidArgumentException;
 use Hyperf\Redis\RedisFactory;
 use Psr\Container\ContainerInterface;
+use Throwable;
 
 use function Hyperf\Config\config;
 
@@ -41,18 +42,16 @@ class Storage
         }
     }
 
-    public function from(int|string $uid): StorageInterface
+    public function from(int|string $uid, bool $throw = false): ?Meta
     {
-        $config = config('octopus.storage');
+        try {
+            return $this->storage->from($uid);
+        } catch (Throwable $exception) {
+            if ($throw) {
+                throw $exception;
+            }
 
-        $driver = $config['driver'];
-        switch ($driver) {
-            case 'redis':
-                $pool = $config['drivers']['redis']['pool'];
-                $redis = $this->container->get(RedisFactory::class)->get($pool);
-                return RedisStorage::from($redis, $uid);
-            default:
-                throw new InvalidArgumentException('The driver of storage is invalid.');
+            return null;
         }
     }
 }
