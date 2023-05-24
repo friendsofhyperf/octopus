@@ -21,11 +21,12 @@ use Hyperf\Framework\Event\BootApplication;
 use Hyperf\Octopus\MsgQueue\Amqp\EventConsumer;
 use Hyperf\Octopus\MsgQueue\Amqp\EventProducer;
 use Hyperf\Octopus\Node;
+use Psr\Container\ContainerInterface;
 
 #[Listener]
 class BootMsgQueueProducerListener implements ListenerInterface
 {
-    public function __construct(protected ConfigInterface $config)
+    public function __construct(protected ContainerInterface $container)
     {
     }
 
@@ -36,7 +37,7 @@ class BootMsgQueueProducerListener implements ListenerInterface
 
     public function process(object $event): void
     {
-        $config = $this->config->get('octopus.mq');
+        $config = $this->container->get(ConfigInterface::class)->get('octopus.mq');
         $driver = $config['driver'];
         switch ($driver) {
             case 'amqp':
@@ -53,7 +54,7 @@ class BootMsgQueueProducerListener implements ListenerInterface
                 AnnotationCollector::collectClass(EventConsumer::class, AmqpConsumer::class, new AmqpConsumer(
                     $options['exchange'],
                     $options['routing_key'],
-                    $options['queue_prefix'] . di()->get(Node::class),
+                    $options['queue_prefix'] . $this->container->get(Node::class),
                 ));
                 break;
         }
