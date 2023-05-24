@@ -90,6 +90,7 @@ return (new PhpCsFixer\Config())
     ->setFinder(
         PhpCsFixer\Finder::create()
             ->exclude('vendor')
+            ->exclude('sample')
             ->in(__DIR__)
     )
     ->setUsingCache(false);
