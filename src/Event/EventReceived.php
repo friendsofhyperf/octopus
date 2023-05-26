@@ -9,8 +9,11 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
-return [
-    Hyperf\ExceptionHandler\Listener\ErrorExceptionHandler::class,
-    Hyperf\Command\Listener\FailToHandleListener::class,
-    Hyperf\Octopus\Listener\DumpEventReceivedListener::class,
-];
+namespace Hyperf\Octopus\Event;
+
+class EventReceived
+{
+    public function __construct(public EventInterface $event)
+    {
+    }
+}

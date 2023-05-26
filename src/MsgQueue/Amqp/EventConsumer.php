@@ -17,7 +17,9 @@ use Hyperf\Amqp\Result;
 use Hyperf\Codec\Json;
 use Hyperf\Contract\StdoutLoggerInterface;
 use Hyperf\Octopus\Event\Event;
+use Hyperf\Octopus\Event\EventReceived;
 use PhpAmqpLib\Message\AMQPMessage;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Throwable;
 
 class EventConsumer extends ConsumerMessage
@@ -26,7 +28,8 @@ class EventConsumer extends ConsumerMessage
     {
         try {
             $event = Event::jsonDeSerialize($data);
-            var_dump($event);
+
+            $this->container->get(EventDispatcherInterface::class)->dispatch(new EventReceived($event));
         } catch (Throwable $exception) {
             if ($logger = $this->container?->get(StdoutLoggerInterface::class)) {
                 $logger->error(Json::encode([
