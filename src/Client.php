@@ -48,7 +48,6 @@ class Client
      */
     public function handle(EventInterface $event): bool
     {
-        var_dump($event);
         return true;
     }
 }
