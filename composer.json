@@ -31,7 +31,6 @@
         "friendsofphp/php-cs-fixer": "^3.0",
         "hyperf/amqp": "^3.0",
         "hyperf/redis": "^3.0",
-        "hyperf/websocket-client": "^3.0",
         "hyperf/websocket-server": "^3.0",
         "mockery/mockery": "^1.0",
         "phpstan/phpstan": "^1.0",
@@ -41,7 +40,8 @@
     "suggest": {
         "swow/swow": "Required to create swow components.",
         "hyperf/amqp": "Required to use amqp driver for msg queue.",
-        "hyperf/redis": "Required to use redis driver for storage."
+        "hyperf/redis": "Required to use redis driver for storage.",
+        "hyperf/websocket-server": "Required to use websocket client."
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
