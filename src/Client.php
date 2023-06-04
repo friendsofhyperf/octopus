@@ -20,12 +20,19 @@ use Psr\Container\ContainerInterface;
 
 class Client
 {
+    protected Node $node;
+
     public function __construct(protected ContainerInterface $container)
     {
+        $this->node = $this->container->get(Node::class);
     }
 
     public function push(EventInterface $event): bool
     {
+        if ($event->getNodeId() === $this->node->getId()) {
+            return $this->handle($event);
+        }
+
         $config = $this->container->get(ConfigInterface::class)->get('octopus.mq');
         $driver = $config['driver'];
         switch ($driver) {
@@ -34,5 +41,14 @@ class Client
             default:
                 throw new InvalidArgumentException(sprintf('The driver %s is invalid', $driver));
         }
+    }
+
+    /**
+     * You can extend this class and rewrite this method.
+     */
+    public function handle(EventInterface $event): bool
+    {
+        var_dump($event);
+        return true;
     }
 }
