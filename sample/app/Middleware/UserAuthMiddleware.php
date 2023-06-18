@@ -15,7 +15,6 @@ use Hyperf\Context\Context;
 use Hyperf\Octopus\Storage\Meta;
 use Hyperf\Octopus\Storage\MetaContext;
 use Hyperf\Octopus\Storage\Storage;
-use Hyperf\Octopus\Storage\StorageInterface;
 use Hyperf\WebSocketServer\Context as WsContext;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;

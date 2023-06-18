@@ -13,7 +13,10 @@ namespace Hyperf\Octopus\Event;
 
 use Hyperf\Contract\Arrayable;
 use Hyperf\Contract\JsonDeSerializable;
+use Hyperf\Octopus\Storage\Storage;
 use JsonSerializable;
+
+use function Hyperf\Octopus\app;
 
 class Event implements EventInterface, JsonSerializable, JsonDeSerializable, Arrayable
 {
@@ -66,5 +69,15 @@ class Event implements EventInterface, JsonSerializable, JsonDeSerializable, Arr
     public function isSuccess(): bool
     {
         return true;
+    }
+
+    public static function makeByUid(int|string $uid, array $payload = []): ?static
+    {
+        $meta = app()->get(Storage::class)->from($uid);
+        if (! $meta) {
+            return null;
+        }
+
+        return new static($meta->nodeId, $payload, [$meta->fd]);
     }
 }

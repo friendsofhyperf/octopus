@@ -43,7 +43,7 @@ class Coroutine
                 Context::copy($id, [
                     AppendRequestIdProcessor::REQUEST_ID,
                     ServerRequestInterface::class,
-                    MetaContext::class
+                    MetaContext::class,
                 ]);
                 $callable();
             } catch (Throwable $throwable) {

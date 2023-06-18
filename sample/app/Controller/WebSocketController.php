@@ -18,6 +18,7 @@ use Hyperf\Di\Annotation\Inject;
 use Hyperf\Engine\WebSocket\Frame;
 use Hyperf\Engine\WebSocket\Response;
 use Hyperf\Octopus\Client\WebSocketClient;
+use Hyperf\Octopus\Event\Event;
 use Hyperf\Octopus\Node;
 use Hyperf\Octopus\Storage\MetaContext;
 
@@ -37,6 +38,12 @@ class WebSocketController implements OnOpenInterface, OnMessageInterface, OnClos
         $meta = MetaContext::instance()->getMeta();
 
         $response->push(new Frame(payloadData: 'I am ' . $meta->uid));
+
+        $frame = Frame::from($frame);
+
+        $event = Event::makeByUid((string) $frame->getPayloadData(), ['message' => 'I am ' . $meta->uid]);
+
+        $this->client->push($event);
     }
 
     public function onOpen($server, $request): void
