@@ -18,7 +18,7 @@ use Throwable;
 
 use function Hyperf\Config\config;
 
-class Storage
+class Storage implements StorageInterface
 {
     protected StorageInterface $storage;
 
@@ -53,5 +53,10 @@ class Storage
 
             return null;
         }
+    }
+
+    public function save(Meta $meta): void
+    {
+        $this->storage->save($meta);
     }
 }

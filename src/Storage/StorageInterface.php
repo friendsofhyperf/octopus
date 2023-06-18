@@ -15,5 +15,5 @@ interface StorageInterface
 {
     public function save(Meta $meta): void;
 
-    public function from(int|string $uid): Meta;
+    public function from(int|string $uid): ?Meta;
 }
