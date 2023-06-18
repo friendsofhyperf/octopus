@@ -13,7 +13,10 @@ namespace Hyperf\Octopus\Storage;
 
 use Hyperf\Contract\Arrayable;
 use Hyperf\Contract\JsonDeSerializable;
+use Hyperf\Octopus\Node;
 use JsonSerializable;
+
+use function Hyperf\Octopus\app;
 
 class Meta implements Arrayable, JsonSerializable, JsonDeSerializable
 {
@@ -38,5 +41,14 @@ class Meta implements Arrayable, JsonSerializable, JsonDeSerializable
     public function jsonSerialize(): mixed
     {
         return $this->toArray();
+    }
+
+    public static function make(int|string $uid, int $fd)
+    {
+        return new static(
+            $uid,
+            app()->get(Node::class)->getId(),
+            $fd
+        );
     }
 }

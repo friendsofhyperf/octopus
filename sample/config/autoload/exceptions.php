@@ -14,5 +14,8 @@ return [
         'http' => [
             App\Exception\Handler\BusinessExceptionHandler::class,
         ],
+        'ws' => [
+            App\Exception\Handler\BusinessExceptionHandler::class,
+        ],
     ],
 ];

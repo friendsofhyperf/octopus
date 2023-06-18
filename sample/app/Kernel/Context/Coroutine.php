@@ -15,6 +15,7 @@ use App\Kernel\Log\AppendRequestIdProcessor;
 use Hyperf\Context\Context;
 use Hyperf\Contract\StdoutLoggerInterface;
 use Hyperf\Engine\Coroutine as Co;
+use Hyperf\Octopus\Storage\MetaContext;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
@@ -42,6 +43,7 @@ class Coroutine
                 Context::copy($id, [
                     AppendRequestIdProcessor::REQUEST_ID,
                     ServerRequestInterface::class,
+                    MetaContext::class
                 ]);
                 $callable();
             } catch (Throwable $throwable) {

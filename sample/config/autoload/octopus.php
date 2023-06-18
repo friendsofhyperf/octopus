@@ -20,4 +20,15 @@ return [
             ],
         ],
     ],
+    'storage' => [
+        'driver' => 'redis',
+        'drivers' => [
+            'redis' => [
+                // from `config/autoload/redis.php`.
+                'pool' => 'default',
+                'key_prefix' => '{octopus}:',
+                'ttl' => 864000,
+            ],
+        ],
+    ],
 ];

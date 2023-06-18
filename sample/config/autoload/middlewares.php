@@ -12,4 +12,7 @@ declare(strict_types=1);
 return [
     'http' => [
     ],
+    'ws' => [
+        App\Middleware\UserAuthMiddleware::class,
+    ],
 ];
